@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/mainShell.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <style src="/resources/css/qsys.css"/>
+    
+    
+    
+    
+        
+    <vbox width="100%" height="100%" style="border:0px solid black;" align="center" pack="center" self="@{define(main_window_data)}">
+        
+        <hbox width="700px">
+            <label id="lbl"  sclass="labelstyle" value="Для начала процесса записи заполните форму,
+                     представленную ниже. Поля, отмеченные звездочкой (*) являются обязательными. 
+                     Если вы укажете email, то на этот адрес автоматически отправится письмо с информацией о предварительной записи."/>
+        </hbox>
+        
+        <div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('ru.apertum.qsystem.prereg.ClientForm')" validationMessages="@id('vmsgs')"
+             form="@id('fx') @load(vm.client) @save(vm.client, before='submit') @validator('ru.apertum.qsystem.prereg.ClientFormValidator', captcha=vm.captcha, captchaInput=vm.captchaInput)">
+            <grid width="70%">
+                <columns>
+                    <column label="Данные клиента" width="30%" />
+                    <column label="Ввести" width="70%"/>
+                    
+                </columns>
+                <rows>
+                    <row align="left">
+                        <label value="Фамилия *" width="150px" />
+                        <hlayout>
+                            <textbox value="@bind(fx.sourname)" width="150px" tabindex="1" />
+                            <label class="error" value="@load(vmsgs['sourname'])" />
+                        </hlayout>
+                        
+                    </row>
+                    <row align="left">
+                        <label value="Имя *" width="150px" />
+                        <hlayout>
+                            <textbox value="@bind(fx.name)" width="150px" tabindex="1" />
+                            <label class="error" value="@load(vmsgs['name'])" />
+                        </hlayout>
+                        
+                    </row>
+                    <row align="left">
+                        <label value="Отчество *" width="150px" />
+                        <hlayout>
+                            <textbox value="@bind(fx.middlename)" width="150px" tabindex="1" />
+                            <label class="error" value="@load(vmsgs['middlename'])" />
+                        </hlayout>
+                        
+                    </row>
+                    
+                    
+                    <row align="left">
+                        E-mail:
+                        <cell>
+                            <textbox width="150px" value="@bind(fx.email)"  tabindex="9" />
+                            <label class="error" value="@load(vmsgs['email'])" />
+                        </cell>
+                        
+ 
+                    </row>
+                  
+                    <row align="left">
+                        Введите буквы с картинки:
+                            <vlayout>
+                                <hlayout>
+                                    <textbox value="@bind(vm.captchaInput)" width="150px"  tabindex="12" />
+                                    <label class="error" value="@load(vmsgs['captcha'])" />
+                                </hlayout>
+                                <hlayout>
+                                    <captcha width="150px" height="50px" bgColor="@load(vm.backgroundColour)"
+                                         fontColor="@load(vm.foregroundColour)" value="@load(vm.captcha)"
+                                         frame="true" />
+                                    <vlayout>
+                                        <button label="Обновить" onClick="@command('regenerate')" width="100px" />
+                                    
+                                    </vlayout>
+                                </hlayout>
+                            </vlayout>
+                       
+                    </row>
+                    <row>
+                        <cell colspan="3" style="text-align:center">
+                            <vlayout>
+                                <label visible="@load(empty vmsgs)" value="@load(empty vmsgs ? 'Форма заполнена корректно!' : '', before='submit')" />
+                                <button label="Далее" width="100px" height="30px" onClick="@command('submit')" />
+                            </vlayout>
+                        </cell>
+                    </row>
+                </rows>
+            </grid>
+        </div>
+        
+        
+    </vbox>
+        
+    
+</zk>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">
+    
+    
+    <vbox width="100%" height="100%" style="border:0px solid black;" align="center" pack="center">
+        
+        <zscript><![CDATA[
+            String title = java.lang.System.getProperty("QSYSPREREG_TITLE");
+            String caption = java.lang.System.getProperty("QSYSPREREG_CAPTION");
+            
+   ]]>
+        </zscript>
+        
+        <window id="main_w" title="${title}" border="normal" width="800px" height="600px" self="@{insert(main_window_data)}">
+            <caption label="Предварительная запись" />
+            <label sclass="labelstyle" value= "${caption}"/>
+            
+        </window>
+        
+        
+        
+       
+    </vbox>
+        
+        
+    
+</zk>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/mainShell.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <style src="/resources/css/qsys.css"/>
+    
+        
+    <vbox width="100%" height="100%" style="border:0px solid black;" align="center" pack="center" self="@{define(main_window_data)}">
+        
+        
+        <div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('ru.apertum.qsystem.prereg.TimeForm')">
+            <vbox width="700px">
+                <hbox>
+                    <label sclass="labelstyle" value= "@bind(vm.client.name)"/>
+                    <label sclass="labelstyle" value= "@bind(vm.client.middlename)"/>
+                    <label sclass="labelstyle" value= "@bind(vm.client.sourname)"/>
+                </hbox>
+                <label sclass="labelstyle" value= "@bind(vm.client.email)"/>
+                <hbox>
+                    <label sclass="labelstyle" value= "Выбранная услуга: "/>
+                    <label sclass="labelstyle" value= "@bind(vm.client.service)"/>
+                </hbox>
+                <hbox>
+                    <label sclass="labelstyle" value= "@bind(vm.client.service.input_caption)"/>
+                    <label sclass="labelstyle" value= "@bind(vm.client.inputData)"/>
+                </hbox>
+                <label sclass="labelstyle" value= " "/>
+                <label id="lbl"  sclass="labelstyle" value="Выберите дату и время для обращения."/>
+            </vbox>
+            <hbox align="left" pack="left">
+                <calendar id="cal" value="@bind(vm.date)" onChange="@command('changeDate')" />
+                <listbox width="300px" id="listbox" mold="paging" pageSize="10" model="@load(vm.timeList)" 
+                         multiple="false" checkmark="true"  
+                         selectedItem="@bind(vm.selectedDate)" onCreate="">
+                    <attribute name="onCreate"><![CDATA[listbox.pagingChild.mold = "os".equals(listbox.pagingChild.mold) ? "default" : "os";]]>
+                    </attribute>
+                    <listhead>
+                        <listheader width="100%"/>
+                        <listheader/>
+                    </listhead>
+                </listbox>
+            </hbox>
+        
+            <hbox pack="center">
+                <button label="Назад" width="100px" height="30px" onClick="@command('back')" />
+                <button label="Далее" width="100px" height="30px" onClick="@command('submit')" />
+            </hbox>
+        </div>
+    </vbox>
+
+</zk>

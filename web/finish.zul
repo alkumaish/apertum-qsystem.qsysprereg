@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/mainShell.zul"?>
+<zk  xmlns="http://www.zkoss.org/2005/zul">
+    <style  src="/resources/css/qsys.css"/>
+    
+    
+    <vbox width="100%" height="100%" style="border:0px solid black;" align="center" pack="center" self="@{define(main_window_data)}">
+        <zscript><![CDATA[    ru.apertum.qsystem.prereg.Client client = (ru.apertum.qsystem.prereg.Client) org.zkoss.zk.ui.Sessions.getCurrent().getAttribute("DATA");   ]]>
+        </zscript>
+        <vbox width="700px">
+            <hbox>
+                <label sclass="labelstyle" value= "Номер регистрации: "/>
+                <label sclass="labelstyle" value= "${client.advClient.id}"/>
+            </hbox>
+            <hbox>
+                <label sclass="labelstyle" value= "${client.sourname}"/>
+                <label sclass="labelstyle" value= "${client.name}"/>
+                <label sclass="labelstyle" value= "${client.middlename}"/>
+            </hbox>
+            <label sclass="labelstyle" value= "${client.email}"/>
+            <label sclass="labelstyle" value= " "/>
+            <hbox>
+                <label sclass="labelstyle" value= "Выбранная услуга: "/>
+                <label sclass="labelstyle" value= "${client.service}"/>
+            </hbox>
+            <hbox>
+                <label sclass="labelstyle" value= "${client.service.input_caption}"/>
+                <label sclass="labelstyle" value= "${client.inputData}"/>
+            </hbox>
+            <label sclass="labelstyle" value= " "/>
+            <label sclass="labelstyle" value= "Время записи: ${client.finishT}"/>
+            <hbox>
+                <label sclass="labelstyle" value= "Время прихода: "/>
+                <label sclass="labelstyle" value="${client.day} с ${client.startT} до ${client.finishT}"/>
+            </hbox>
+            <label sclass="labelstyle" value="Информация:"/>
+            <html><![CDATA[${client.service.preInfoHtml}]]>
+            </html>
+        </vbox>
+        
+        
+        
+        <hbox pack="center">
+            <zscript language="java">
+                void printBrowser(){
+                Clients.print();
+                }
+            </zscript>
+            <button label="Печать" width="100px" height="30px" onClick="java:printBrowser()" />
+        </hbox>
+    </vbox>
+
+</zk>

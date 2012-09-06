@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/mainShell.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <style src="/resources/css/qsys.css"/>
+    
+        
+    <vbox width="100%" height="100%" style="border:0px solid black;" align="center" pack="center" self="@{define(main_window_data)}">
+        
+        <hbox width="700px">
+            <label id="lbl"  sclass="labelstyle" value="Не удачное выполнение. Попытайтесь еще раз чуть позднее."/>
+        </hbox>
+        
+    </vbox>
+
+</zk>
