@@ -18,29 +18,30 @@ package ru.apertum.qsystem.common.cmd;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import ru.apertum.qsystem.common.model.QAuthorizationCustomer;
 
 /**
  *
  * @author Evgeniy Egorov
  */
-public class RpcGetBool extends JsonRPC20 {
+public class RpcGetAuthorizCustomer extends JsonRPC20 {
 
-    public RpcGetBool() {
+    public RpcGetAuthorizCustomer() {
     }
     
     @Expose
     @SerializedName("result")
-    private boolean result;
+    private QAuthorizationCustomer result;
 
-    public void setResult(boolean result) {
+    public void setResult(QAuthorizationCustomer result) {
         this.result = result;
     }
 
-    public boolean getResult() {
+    public QAuthorizationCustomer getResult() {
         return result;
     }
 
-    public RpcGetBool(boolean result) {
+    public RpcGetAuthorizCustomer(QAuthorizationCustomer result) {
         this.result = result;
     }
 

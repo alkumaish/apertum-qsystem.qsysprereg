@@ -18,30 +18,32 @@ package ru.apertum.qsystem.common.cmd;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import java.util.LinkedList;
+//import ru.apertum.qsystem.server.model.response.QRespItem;
 
 /**
  *
  * @author Evgeniy Egorov
  */
-public class RpcGetBool extends JsonRPC20 {
+public class RpcGetRespList extends JsonRPC20 {
 
-    public RpcGetBool() {
+    public RpcGetRespList() {
     }
-    
+    /*
     @Expose
     @SerializedName("result")
-    private boolean result;
+    private LinkedList<QRespItem> result;
 
-    public void setResult(boolean result) {
+    public void setResult(LinkedList<QRespItem> result) {
         this.result = result;
     }
 
-    public boolean getResult() {
+    public LinkedList<QRespItem> getResult() {
         return result;
     }
 
-    public RpcGetBool(boolean result) {
+    public RpcGetRespList(LinkedList<QRespItem> result) {
         this.result = result;
     }
-
+    */ 
 }

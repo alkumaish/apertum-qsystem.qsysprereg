@@ -18,30 +18,32 @@ package ru.apertum.qsystem.common.cmd;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+//import ru.apertum.qsystem.server.model.infosystem.QInfoItem;
 
 /**
  *
  * @author Evgeniy Egorov
  */
-public class RpcGetBool extends JsonRPC20 {
+public class RpcGetInfoTree extends JsonRPC20 {
 
-    public RpcGetBool() {
+    public RpcGetInfoTree() {
     }
-    
+    /*
     @Expose
     @SerializedName("result")
-    private boolean result;
+    private QInfoItem result;
 
-    public void setResult(boolean result) {
+    public void setResult(QInfoItem result) {
         this.result = result;
     }
 
-    public boolean getResult() {
+    public QInfoItem getResult() {
         return result;
     }
 
-    public RpcGetBool(boolean result) {
+    public RpcGetInfoTree(QInfoItem result) {
         this.result = result;
     }
+    */
 
 }

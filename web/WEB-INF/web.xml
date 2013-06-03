@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!-- web.xml
 	Purpose:
 		
@@ -10,22 +9,19 @@
 
 Copyright (C) 2004 Potix Corporation. All Rights Reserved.
 -->
-
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <description>Предварительая запись в очередь</description>
     <display-name>QSysPreReg</display-name>
-
-    <description><![CDATA[Предварительая запись в очередь]]>
-    </description>
+    <description>Предварительая запись в очередь</description>
     <display-name>QSysPreReg</display-name>
-	<!--
+    <!--
 	<icon>
 		<small-icon></small-icon>
 		<large-icon></large-icon>
 	</icon>
 	-->
-	<!-- Spring ApplicationContext -->
-	<!-- 
+    <!-- Spring ApplicationContext -->
+    <!-- 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring-config.xml</param-value>
@@ -34,8 +30,20 @@ Copyright (C) 2004 Potix Corporation. All Rights Reserved.
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	 -->
-	<!-- //// -->
-	<!-- ZK -->
+    <!-- //// -->
+    <!-- ZK -->
+    <filter>
+        <filter-name>ZulFilter</filter-name>
+        <filter-class>ru.apertum.qsystem.prereg.core.ZulFilter</filter-class>
+        <init-param>
+                <param-name>active</param-name>
+                <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>ZulFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <listener>
         <description>ZK listener for session cleanup</description>
         <listener-class>org.zkoss.zk.ui.http.HttpSessionListener</listener-class>
@@ -44,14 +52,14 @@ Copyright (C) 2004 Potix Corporation. All Rights Reserved.
         <description>ZK loader for ZUML pages</description>
         <servlet-name>zkLoader</servlet-name>
         <servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
-		<!-- Must. Specifies URI of the update engine (DHtmlUpdateServlet).
+        <!-- Must. Specifies URI of the update engine (DHtmlUpdateServlet).
 		It must be the same as <url-pattern> for the update engine.
 		-->
         <init-param>
             <param-name>update-uri</param-name>
             <param-value>/zkau</param-value>
         </init-param>
-		<!-- [Optional] Specifies whether to compress the output
+        <!-- [Optional] Specifies whether to compress the output
 		of the ZK loader. It speeds up the transmission over slow Internet.
 		However, if you configure a filter to post-processing the
 		output or your server will do the compression, you might have to disable it.
@@ -62,14 +70,15 @@ Copyright (C) 2004 Potix Corporation. All Rights Reserved.
 			<param-value>true</param-value>
 		</init-param>
 		-->
-		<!-- [Optional] Specifies the default log level: OFF, ERROR, WARNING,
+        <!-- [Optional] Specifies the default log level: OFF, ERROR, WARNING,
 			INFO, DEBUG and FINER. If not specified, the system default is used.
 		<init-param>
 			<param-name>log-level</param-name>
 			<param-value>OFF</param-value>
 		</init-param>
 		-->
-        <load-on-startup>1</load-on-startup><!-- Must -->
+        <load-on-startup>1</load-on-startup>
+        <!-- Must -->
     </servlet>
     <servlet-mapping>
         <servlet-name>zkLoader</servlet-name>
@@ -91,20 +100,17 @@ Copyright (C) 2004 Potix Corporation. All Rights Reserved.
         <servlet-name>zkLoader</servlet-name>
         <url-pattern>*.mul</url-pattern>
     </servlet-mapping>
-
-	<!-- Optional. Uncomment it if you want to use richlets.
+    <!-- Optional. Uncomment it if you want to use richlets.
 	-->
     <servlet-mapping>
         <servlet-name>zkLoader</servlet-name>
         <url-pattern>/zk/*</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <description>The asynchronous update engine for ZK</description>
         <servlet-name>auEngine</servlet-name>
         <servlet-class>org.zkoss.zk.au.http.DHtmlUpdateServlet</servlet-class>
-
-		<!-- [Optional] Specifies whether to compress the output
+        <!-- [Optional] Specifies whether to compress the output
 		of the ZK loader. It speeds up the transmission over slow Internet.
 		However, if your server will do the compression, you might have to disable it.
 
@@ -114,7 +120,7 @@ Copyright (C) 2004 Potix Corporation. All Rights Reserved.
 			<param-value>true</param-value>
 		</init-param>
 		-->
-		<!-- [Optional] Specifies the AU processor for particular prefix.
+        <!-- [Optional] Specifies the AU processor for particular prefix.
 		<init-param>
 			<param-name>processor0</param-name>
 			<param-value>/upload=com.my.MyUploader</param-value>
@@ -125,8 +131,7 @@ Copyright (C) 2004 Potix Corporation. All Rights Reserved.
         <servlet-name>auEngine</servlet-name>
         <url-pattern>/zkau/*</url-pattern>
     </servlet-mapping>
-
-	<!-- Uncomment if you want to use the ZK filter to post process the HTML output
+    <!-- Uncomment if you want to use the ZK filter to post process the HTML output
 	generated by other technology, such as JSP and velocity.
 	<filter>
 		<filter-name>zkFilter</filter-name>
@@ -149,10 +154,9 @@ Copyright (C) 2004 Potix Corporation. All Rights Reserved.
 		<url-pattern>/test/filter2.dsp</url-pattern>
 	</filter-mapping>
 	-->
-
-	<!-- ///////////// -->
-	<!-- DSP (optional) -->
-	<!-- Uncomment it if you want to use DSP
+    <!-- ///////////// -->
+    <!-- DSP (optional) -->
+    <!-- Uncomment it if you want to use DSP
 	However, it is turned on since zkdemo/userguide uses DSP to generate CSS.
 	-->
     <servlet>
@@ -167,23 +171,13 @@ Copyright (C) 2004 Potix Corporation. All Rights Reserved.
         <servlet-name>dspLoader</servlet-name>
         <url-pattern>*.dsp</url-pattern>
     </servlet-mapping>
-        
-      <!-- /////////////  // #################################### -->
-        
-    
-        
-    <servlet-mapping>
-        <servlet-name>zkLoader</servlet-name>
-        <url-pattern>/selectService</url-pattern>
-    </servlet-mapping>
-
-	<!-- /////////// -->
-	<!-- Miscellaneous -->
+    <!-- /////////////  // #################################### -->
+    <!-- /////////// -->
+    <!-- Miscellaneous -->
     <session-config>
         <session-timeout>60</session-timeout>
     </session-config>
-
-	<!-- MIME mapping -->
+    <!-- MIME mapping -->
     <mime-mapping>
         <extension>doc</extension>
         <mime-type>application/vnd.ms-word</mime-type>
@@ -256,7 +250,6 @@ Copyright (C) 2004 Potix Corporation. All Rights Reserved.
         <extension>zul</extension>
         <mime-type>text/html</mime-type>
     </mime-mapping>
-
     <welcome-file-list>
         <welcome-file>index.zul</welcome-file>
         <welcome-file>index.zhtml</welcome-file>

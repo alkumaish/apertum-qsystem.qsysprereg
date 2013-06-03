@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 {Apertum}Projects. web: www.apertum.ru email: info@apertum.ru
+ *  Copyright (C) 2010 {Apertum}Projects. web: www.apertum.ru email: info//@apertum.ru
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,48 +18,16 @@ package ru.apertum.qsystem.server.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
-import javax.persistence.Id;
 import java.util.PriorityQueue;
-import java.util.ServiceLoader;
-import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
-//import org.hibernate.annotations.Cascade;
-import ru.apertum.qsystem.client.Locales;
 import ru.apertum.qsystem.common.CustomerState;
-//import ru.apertum.qsystem.common.QLog;
-import ru.apertum.qsystem.common.Uses;
-//import ru.apertum.qsystem.common.exceptions.ServerException;
 import ru.apertum.qsystem.common.model.QCustomer;
-//import ru.apertum.qsystem.extra.ICustomerChangePosition;
-//import ru.apertum.qsystem.server.ServerProps;
-//import ru.apertum.qsystem.server.Spring;
-//import ru.apertum.qsystem.server.model.calendar.QCalendar;
-//import ru.apertum.qsystem.server.model.schedule.QSchedule;
 
 /**
  * Модель данных для функционирования очереди
@@ -71,23 +39,23 @@ import ru.apertum.qsystem.common.model.QCustomer;
  * Главный класс модели данных.
  * Содержит объекты всех кастомеров в очереди к этой услуге.
  * Имеет все необходимые методы для манипулирования кастомерами в пределах одной очереди
- * @author Evgeniy Egorov
+ * //@author Evgeniy Egorov
  *
  */
 //@Entity
 //@Table(name = "services")
-public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, Transferable, Serializable {
+public class QService implements ITreeIdGetter{
 
     /**
      * множество кастомеров, вставших в очередь к этой услуге
      */
-    @Transient
+    //@Transient
     private final PriorityQueue<QCustomer> customers = new PriorityQueue<>();
 
     private PriorityQueue<QCustomer> getCustomers() {
         return customers;
     }
-    @Transient
+    //@Transient
     //@Expose
     //@SerializedName("clients")
     private final LinkedList<QCustomer> clients = new LinkedList<>(customers);
@@ -95,14 +63,14 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
     /**
      * Это все кастомеры стоящие к этой услуге в виде списка
      * Только для бакапа на диск
-     * @return
+     * //@return
      */
     public LinkedList<QCustomer> getClients() {
         return clients;
     }
     //@Id
     //@Column(name = "id")
-    //@GeneratedValue(strategy = GenerationType.AUTO) авто нельзя, т.к. id нужны для формирования дерева
+    ////@GeneratedValue(strategy = GenerationType.AUTO) авто нельзя, т.к. id нужны для формирования дерева
     @Expose
     @SerializedName("id")
     private Long id = new Date().getTime();
@@ -115,10 +83,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
     public final void setId(Long id) {
         this.id = id;
     }
-    /**
-     * Состояние услуги. 1 - доступна, 0 - недоступна, -1 - невидима.
-     */
-    @Column(name = "status")
+    //@Column(name = "status")
     @Expose
     @SerializedName("status")
     private Integer status;
@@ -126,28 +91,11 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
     public Integer getStatus() {
         return status;
     }
-    /**
-     * Пунктов регистрации может быть много.
-     * Наборы кнопок на разных киосках могут быть разные.
-     * Указание для какого пункта регистрации услуга, 0-для всех, х-для киоска х.
-     */
-    @Column(name = "point")
-    @Expose
-    @SerializedName("point")
-    private Integer point = 0;
-
-    public Integer getPoint() {
-        return point;
-    }
-
-    public void setPoint(Integer point) {
-        this.point = point;
-    }
 
     public final void setStatus(Integer status) {
         this.status = status;
     }
-    @Column(name = "advance_limit")
+    //@Column(name = "advance_limit")
     @Expose
     @SerializedName("advance_limit")
     private Integer advanceLimit = 1;
@@ -159,7 +107,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
     public void setAdvanceLinit(Integer advanceLimit) {
         this.advanceLimit = advanceLimit;
     }
-    @Column(name = "day_limit")
+    //@Column(name = "day_limit")
     @Expose
     @SerializedName("day_limit")
     private Integer dayLimit = 0;
@@ -171,7 +119,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
     public void setDayLimit(Integer dayLimit) {
         this.dayLimit = dayLimit;
     }
-    @Column(name = "person_day_limit")
+    //@Column(name = "person_day_limit")
     @Expose
     @SerializedName("person_day_limit")
     private Integer personDayLimit = 0;
@@ -187,7 +135,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
      * Это ограничение в днях, в пределах которого можно записаться вперед при предварительной записи
      * может быть null или 0 если нет ограничения
      */
-    @Column(name = "advance_limit_period")
+    //@Column(name = "advance_limit_period")
     @Expose
     @SerializedName("advance_limit_period")
     private Integer advanceLimitPeriod = 0;
@@ -200,26 +148,13 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
         this.advanceLimitPeriod = advanceLimitPeriod;
     }
     /**
-     * Деление сетки предварительной записи
+     * Удаленный или нет.
+     * Нельзя их из базы гасить чтоб констрейнты не поехали.
+     * 0 - удаленный
+     * 1 - действующий
+     *  Только для БД.
      */
-    @Column(name = "advance_time_period")
-    @Expose
-    @SerializedName("advance_time_period")
-    private Integer advanceTimePeriod = 60;
-
-    public Integer getAdvanceTimePeriod() {
-        return advanceTimePeriod;
-    }
-
-    public void setAdvanceTimePeriod(Integer advanceTimePeriod) {
-        this.advanceTimePeriod = advanceTimePeriod;
-    }
-    /**
-     * Способ вызова клиента юзером
-     * 1 - стандартно
-     * 2 - backoffice, т.е. вызов следующего без табло и звука, запершение только редиректом
-     */
-    @Column(name = "enable")
+    //@Column(name = "enable")
     @Expose
     @SerializedName("enable")
     private Integer enable = 1;
@@ -232,25 +167,10 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
         this.enable = enable;
     }
     /**
-     * Способ вызова клиента юзером
-     * 1 - стандартно
-     * 2 - backoffice, т.е. вызов следующего без табло и звука, запершение только редиректом
-     */
-    @Column(name = "seq_id")
-    private Integer seqId = 0;
-
-    public Integer getSeqId() {
-        return seqId;
-    }
-
-    public void setSeqId(Integer seqId) {
-        this.seqId = seqId;
-    }
-    /**
      * Требовать или нет от пользователя после окончания работы с клиентом по этой услуге
      * обозначить результат этой работы выбрав пункт из словаря результатов
      */
-    @Column(name = "result_required")
+    //@Column(name = "result_required")
     @Expose
     @SerializedName("result_required")
     private Boolean result_required = false;
@@ -266,7 +186,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
      * Требовать или нет на пункте регистрации ввода от клиента каких-то
      * данных перед постановкой в очередь после выбора услуги.
      */
-    @Column(name = "input_required")
+    //@Column(name = "input_required")
     @Expose
     @SerializedName("input_required")
     private Boolean input_required = false;
@@ -283,7 +203,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
      * данных перед постановкой в очередь после выбора услуги.
      * Также печатается на талоне рядом с введенными данными.
      */
-    @Column(name = "input_caption")
+    //@Column(name = "input_caption")
     @Expose
     @SerializedName("input_caption")
     private String input_caption = "";
@@ -299,7 +219,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
      * html текст информационного сообщения перед постановкой в очередь
      * Если этот параметр пустой, то не требуется показывать информационную напоминалку на пункте регистрации
      */
-    @Column(name = "pre_info_html")
+    //@Column(name = "pre_info_html")
     @Expose
     @SerializedName("pre_info_html")
     private String preInfoHtml = "";
@@ -314,7 +234,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
     /**
      * текст для печати при необходимости перед постановкой в очередь
      */
-    @Column(name = "pre_info_print_text")
+    //@Column(name = "pre_info_print_text")
     @Expose
     @SerializedName("pre_info_print_text")
     private String preInfoPrintText = "";
@@ -327,34 +247,19 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
         this.preInfoPrintText = preInfoPrintText;
     }
     /**
-     * текст для печати при необходимости перед постановкой в очередь
-     */
-    @Column(name = "ticket_text")
-    @Expose
-    @SerializedName("ticket_text")
-    private String ticketText = "";
-
-    public String getTicketText() {
-        return ticketText;
-    }
-
-    public void setTicketText(String ticketText) {
-        this.ticketText = ticketText;
-    }
-    /**
      * последний номер, выданный последнему кастомеру при номерировании клиентов обособлено в услуге.
      * тут такой замут. когда услугу создаешь из json где-то на клиенте, то там же спринг-контекст не поднят
      * да и нужно это только в качестве данных.
      */
-    @Transient
+    //@Transient
     private int lastNumber = Integer.MIN_VALUE;
     /**
      * последний номер, выданный последнему кастомеру при номерировании клиентов общем рядом для всех услуг.
      * Ограничение самого минимально возможного номера клиента при сквозном нумерировании
      * происходит при определении параметров нумерации.
      */
-    @Transient
-    private static int lastStNumber = Integer.MIN_VALUE;
+    //@Transient
+    private static int lastStNumber = 0;
 
     public QService() {
         super();
@@ -367,42 +272,15 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
 
     /**
      * Получить номер для сделующего кастомера. Произойдет инкремент счетчика номеров.
-     * @return
+     * //@return
      */
     synchronized public int getNextNumber() {
-        /*
-        if (lastNumber == Integer.MIN_VALUE) {
-            lastNumber = ServerProps.getInstance().getProps().getFirstNumber() - 1;
-        }
-        if (lastStNumber == Integer.MIN_VALUE) {
-            lastStNumber = ServerProps.getInstance().getProps().getFirstNumber() - 1;
-        }
-        if (lastNumber >= ServerProps.getInstance().getProps().getLastNumber()) {
-            clearNextNumber();
-        }
-        if (lastStNumber >= ServerProps.getInstance().getProps().getLastNumber()) {
-            clearNextStNumber();
-        }
-        */ 
-        // учтем вновь поставленного. прибавим одного к количеству сегодня пришедших к данной услуге
-        final int today = new GregorianCalendar().get(GregorianCalendar.DAY_OF_YEAR);
-        if (today != day) {
-            day = today;
-            countPerDay = 0;
-        }
-        countPerDay++;
-
-        // 0 - общая нумерация, 1 - для каждой услуги своя нумерация 
-        if (/*ServerProps.getInstance().getProps().getNumering()*/true) {
-            return ++lastNumber;
-        } else {
-            return ++lastStNumber;
-        }
+        return 33;
     }
 
     /**
      * Иссяк лимит на одинаковые введенные данные в день по услуге или нет
-     * @return true - превышен, в очередь становиться нельзя; false - можно в очередь встать
+     * //@return true - превышен, в очередь становиться нельзя; false - можно в очередь встать
      */
     public boolean isLimitPersonPerDayOver(String data) {
         return getPersonDayLimit() != 0 && getDay() == new GregorianCalendar().get(GregorianCalendar.DAY_OF_YEAR) && getPersonDayLimit() <= getCountPersonsPerDay(data);
@@ -433,16 +311,15 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
 
     /**
      * Иссяк лимит на возможных обработанных в день по услуге или нет
-     * @param advCusts сколько предварительнозаписанных уже есть в очереди
-     * @return true - превышен, в очередь становиться нельзя; false - можно в очередь встать
+     * //@return true - превышен, в очередь становиться нельзя; false - можно в очередь встать
      */
-    public boolean isLimitPerDayOver(int advCusts) {
-        return getDayLimit() != 0 && getDay() == new GregorianCalendar().get(GregorianCalendar.DAY_OF_YEAR) && getDayLimit() - advCusts <= getCountPerDay();
+    public boolean isLimitPerDayOver() {
+        return getDayLimit() != 0 && getDay() == new GregorianCalendar().get(GregorianCalendar.DAY_OF_YEAR) && getDayLimit() <= getCountPerDay();
     }
     /**
      * Сколько кастомеров уже прошло услугу сегодня
      */
-    @Transient
+    //@Transient
     @Expose
     @SerializedName("countPerDay")
     private int countPerDay = 0;
@@ -457,7 +334,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
     /**
      * Текущий день, нужен для учета количества кастомеров обработанных в этой услуге в текущий день
      */
-    @Transient
+    //@Transient
     @Expose
     @SerializedName("day")
     private int day = 0;
@@ -484,7 +361,8 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
      * а если этот префикс совпадает с префиксом самой услуги,
      * то при номере кастомера больше последнего номера ведущегося в услуге,
      * нужно сменить номер ведущийся в системе на кастомеровский.
-     * @param customer кастомер в которого добавить
+     * //@param element XML-представление чего-либо требующее внесения в него информации
+     * о услуге.
      */
     private void updateInfo(QCustomer customer) {
         final int number = customer.getNumber();
@@ -510,53 +388,10 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
      * Добавить в очередь
      * при этом проставится название сервиса, в который всрал, и его описание,
      * если у кастомера нету префикса, то проставится и префикс.
-     * @param customer это кастомер которого добавляем в очередь к услуге
+     * //@param customer это кастомер которого добавляем в очередь к услуге
      */
     public void addCustomer(QCustomer customer) {
-        updateInfo(customer);
-        if (!getCustomers().add(customer)) {
-            throw new RuntimeException("Невозможно добавить нового кастомера в хранилище кастомеров.");
-        }
-
-        // поддержка расширяемости плагинами/ определим куда влез клиент
-        QCustomer before = null;
-        QCustomer after = null;
-        for (Iterator<QCustomer> itr = getCustomers().iterator(); itr.hasNext();) {
-            final QCustomer c = itr.next();
-            if (!customer.getId().equals(c.getId())) {
-                if (customer.compareTo(c) == 1) {
-                    // c - первее, определяем before
-                    if (before == null) {
-                        before = c;
-                    } else {
-                        if (before.compareTo(c) == -1) {
-                            before = c;
-                        }
-                    }
-                } else {
-                    if (customer.compareTo(c) != 0) {
-                        // c - после, определяем after
-                        if (after == null) {
-                            after = c;
-                        } else {
-                            if (after.compareTo(c) == 1) {
-                                after = c;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        // поддержка расширяемости плагинами
-        /*
-        for (final ICustomerChangePosition event : ServiceLoader.load(ICustomerChangePosition.class)) {
-            //QLog.l().logger().info("Вызов SPI расширения. Описание: " + event.getDescription());
-            event.insert(customer, before, after);
-        }
-        * */
-
-        clients.clear();
-        clients.addAll(getCustomers());
+        
     }
 
     /**
@@ -564,14 +399,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
      */
     public void freeCustomers() {
         // поддержка расширяемости плагинами
-        /*
-        for (final ICustomerChangePosition event : ServiceLoader.load(ICustomerChangePosition.class)) {
-            //QLog.l().logger().info("Вызов SPI расширения. Описание: " + event.getDescription());
-            for (Iterator<QCustomer> itr = getCustomers().iterator(); itr.hasNext();) {
-                event.remove(itr.next());
-            }
-        }
-        * */
+        
         getCustomers().clear();
         clients.clear();
         clients.addAll(getCustomers());
@@ -579,7 +407,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
 
     /**
      * Получить, но не удалять.  NoSuchElementException при неудаче
-     * @return первого в очереди кастомера
+     * //@return первого в очереди кастомера
      */
     public QCustomer getCustomer() {
         return getCustomers().element();
@@ -587,18 +415,13 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
 
     /**
      * Получить и удалить.  NoSuchElementException при неудаче
-     * @return первого в очереди кастомера
+     * //@return первого в очереди кастомера
      */
     public QCustomer removeCustomer() {
         final QCustomer customer = getCustomers().remove();
 
         // поддержка расширяемости плагинами
-        /*
-        for (final ICustomerChangePosition event : ServiceLoader.load(ICustomerChangePosition.class)) {
-            //QLog.l().logger().info("Вызов SPI расширения. Описание: " + event.getDescription());
-            event.remove(customer);
-        }
-        * */
+  
 
         clients.clear();
         clients.addAll(getCustomers());
@@ -607,7 +430,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
 
     /**
      * Получить но не удалять. null при неудаче
-     * @return первого в очереди кастомера
+     * //@return первого в очереди кастомера
      */
     public QCustomer peekCustomer() {
         return getCustomers().peek();
@@ -615,18 +438,13 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
 
     /** 
      * Получить и удалить. может вернуть null при неудаче
-     * @return первого в очереди кастомера
+     * //@return первого в очереди кастомера
      */
     public QCustomer polCustomer() {
         final QCustomer customer = getCustomers().poll();
         if (customer != null) {
             // поддержка расширяемости плагинами
-            /*
-            for (final ICustomerChangePosition event : ServiceLoader.load(ICustomerChangePosition.class)) {
-                //QLog.l().logger().info("Вызов SPI расширения. Описание: " + event.getDescription());
-                event.remove(customer);
-            }
-            * */
+         
         }
 
         clients.clear();
@@ -636,28 +454,18 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
 
     /**
      * Удалить любого в очереди кастомера. 
-     * @param customer удаляемый кастомер
-     * @return может вернуть false при неудаче
+     * //@param customer удаляемый кастомер
+     * //@return может вернуть false при неудаче
      */
     public boolean removeCustomer(QCustomer customer) {
         final Boolean res = getCustomers().remove(customer);
-        if (customer != null && res) {
-            // поддержка расширяемости плагинами
-            /*
-            for (final ICustomerChangePosition event : ServiceLoader.load(ICustomerChangePosition.class)) {
-                //QLog.l().logger().info("Вызов SPI расширения. Описание: " + event.getDescription());
-                event.remove(customer);
-            }
-            * */
-        }
-        clients.clear();
-        clients.addAll(getCustomers());
+        
         return res;
     }
 
     /** 
      *  Получение количества кастомеров, стоящих в очереди.
-     * @return количество кастомеров в этой услуге
+     * //@return количество кастомеров в этой услуге
      */
     public int getCountCustomers() {
         return getCustomers().size();
@@ -679,7 +487,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
      */
     @Expose
     @SerializedName("description")
-    @Column(name = "description")
+    //@Column(name = "description")
     private String description;
 
     public final void setDescription(String description) {
@@ -694,7 +502,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
      */
     @Expose
     @SerializedName("service_prefix")
-    @Column(name = "service_prefix")
+    //@Column(name = "service_prefix")
     private String prefix = "";
 
     public final void setPrefix(String prefix) {
@@ -709,7 +517,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
      */
     @Expose
     @SerializedName("name")
-    @Column(name = "name")
+    //@Column(name = "name")
     private String name;
 
     public final void setName(String name) {
@@ -725,7 +533,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
      */
     @Expose
     @SerializedName("buttonText")
-    @Column(name = "button_text")
+    //@Column(name = "button_text")
     private String buttonText;
 
     public String getButtonText() {
@@ -738,7 +546,7 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
     /**
      * Группировка услуг.
      */
-    @Column(name = "prent_id")
+    //@Column(name = "prent_id")
     private Long parentId;
 
     @Override
@@ -749,122 +557,16 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
     public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
-    /*
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "schedule_id")
-    private QSchedule schedule;
-
-    public QSchedule getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(QSchedule schedule) {
-        this.schedule = schedule;
-    }
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "calendar_id")
-    private QCalendar calendar;
-
-    public QCalendar getCalendar() {
-        return calendar;
-    }
-
-    public void setCalendar(QCalendar calendar) {
-        this.calendar = calendar;
-    }
-    * */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "services_id")
-    //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-    @Expose
-    @SerializedName("langs")
-    private Set<QServiceLang> langs = new HashSet<>();
-
-    public Set<QServiceLang> getLangs() {
-        return langs;
-    }
-
-    public void setLangs(Set<QServiceLang> langs) {
-        this.langs = langs;
-    }
-    @Transient
-    private HashMap<String, QServiceLang> qslangs = null;
-
-    public QServiceLang getServiceLang(String nameLocale) {
-        if (qslangs == null) {
-            qslangs = new HashMap<>();
-            for (QServiceLang sl : getLangs()) {
-                qslangs.put(sl.getLang(), sl);
-            }
-        }
-        return qslangs.get(nameLocale);
-    }
-
-    public static enum Field {
-
-        /** Надпись на кнопке */
-        BUTTON_TEXT,
-        /** заголовок ввода клиентом */
-        INPUT_CAPTION,
-        /** читаем перед тем как встать в очередь  */
-        PRE_INFO_HTML,
-        /** печатаем подсказку перед тем как встать в очередь  */
-        PRE_INFO_PRINT_TEXT,
-        /** текст на талоте персонально услуги */
-        TICKET_TEXT,
-        /** описание услуги */
-        DESCRIPTION,
-        /** имя услуги */
-        NAME
-    };
-
-    public String getTextToLocale(Field field) {
-        final String nl = Locales.getInstance().getNameOfPresentLocale();
-        final QServiceLang sl = getServiceLang(nl);
-        switch (field) {
-            case BUTTON_TEXT:
-                return !Locales.getInstance().isWelcomeMultylangs() || sl == null || sl.getButtonText() == null || sl.getButtonText().isEmpty() ? getButtonText() : sl.getButtonText();
-            case INPUT_CAPTION:
-                return !Locales.getInstance().isWelcomeMultylangs() || sl == null || sl.getInput_caption() == null || sl.getInput_caption().isEmpty() ? getInput_caption() : sl.getInput_caption();
-            case PRE_INFO_HTML:
-                return !Locales.getInstance().isWelcomeMultylangs() || sl == null || sl.getPreInfoHtml() == null || sl.getPreInfoHtml().isEmpty() ? getPreInfoHtml() : sl.getPreInfoHtml();
-            case PRE_INFO_PRINT_TEXT:
-                return !Locales.getInstance().isWelcomeMultylangs() || sl == null || sl.getPreInfoPrintText() == null || sl.getPreInfoPrintText().isEmpty() ? getPreInfoPrintText() : sl.getPreInfoPrintText();
-            case TICKET_TEXT:
-                return !Locales.getInstance().isWelcomeMultylangs() || sl == null || sl.getTicketText() == null || sl.getTicketText().isEmpty() ? getTicketText() : sl.getTicketText();
-            case DESCRIPTION:
-                return !Locales.getInstance().isWelcomeMultylangs() || sl == null || sl.getDescription() == null || sl.getDescription().isEmpty() ? getDescription() : sl.getDescription();
-            case NAME:
-                return !Locales.getInstance().isWelcomeMultylangs() || sl == null || sl.getName() == null || sl.getName().isEmpty() ? getName() : sl.getName();
-            default:
-                throw new AssertionError();
-        }
-
-    }
-    
-    /**
-     * Если не NULL и не пустая, то эта услуга недоступна и сервер обламает постановку в очередь выкинув причину из этого поля на пункт регистрации
-     */
-    @Transient
-    private String tempReasonUnavailable;
-
-    public String getTempReasonUnavailable() {
-        return tempReasonUnavailable;
-    }
-
-    public void setTempReasonUnavailable(String tempReasonUnavailable) {
-        this.tempReasonUnavailable = tempReasonUnavailable;
-    }
+   
     //*******************************************************************************************************************
     //*******************************************************************************************************************
     //********************** Реализация методов узла в дереве *********************************************************** 
+
     /**
      * По сути группа объединения услуг или коернь всего дерева.
      * То во что включена данныя услуга.
      */
-    @Transient
     private QService parentService;
-    @Transient
     @Expose
     @SerializedName("inner_services")
     private LinkedList<QService> childrenOfService = new LinkedList<>();
@@ -943,31 +645,10 @@ public class QService extends DefaultMutableTreeNode implements ITreeIdGetter, T
             parentId = null;
         }
     }
-    /**
-     * data flavor used to get back a DnDNode from data transfer
-     */
-    public static final DataFlavor DnDNode_FLAVOR = new DataFlavor(QService.class, "Drag and drop Node");
-    /**
-     * list of all flavors that this DnDNode can be transfered as
-     */
-    protected static DataFlavor[] flavors = {QService.DnDNode_FLAVOR};
 
     @Override
-    public DataFlavor[] getTransferDataFlavors() {
-        return flavors;
+    public void setUserObject(Object object) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-
-    @Override
-    public boolean isDataFlavorSupported(DataFlavor flavor) {
-        return true;
-    }
-
-    @Override
-    public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-        if (this.isDataFlavorSupported(flavor)) {
-            return this;
-        } else {
-            throw new UnsupportedFlavorException(flavor);
-        }
-    }
+ 
 }

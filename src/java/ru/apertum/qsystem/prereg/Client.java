@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import ru.apertum.qsystem.common.Uses;
 import ru.apertum.qsystem.common.model.QAdvanceCustomer;
 import ru.apertum.qsystem.server.model.QService;
 
@@ -79,7 +80,8 @@ public class Client {
     }
 
     public void setDate(Date date) {
-        day = format_dd_MM.format(date);
+        //day = format_dd_MM.format(date);
+        day = Uses.format_dd_MM_yyyy.format(date);
         gc.setTime(date);
         int i = gc.get(GregorianCalendar.HOUR_OF_DAY);
         startT = String.valueOf(i - 1)+":00";

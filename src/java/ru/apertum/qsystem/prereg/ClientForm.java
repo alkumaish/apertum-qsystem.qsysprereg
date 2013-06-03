@@ -72,6 +72,7 @@ public class ClientForm {
         try {
             ServiceList.getInstance().getServiceList();
             Sessions.getCurrent().setAttribute("DATA", client);
+            //Executions.sendRedirect("/selectService");
             Executions.sendRedirect("/selectService.zul");
         } catch (Throwable t) {
             System.err.println("Server SOO is down! " + t);

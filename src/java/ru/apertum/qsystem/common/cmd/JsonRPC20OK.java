@@ -23,24 +23,29 @@ import com.google.gson.annotations.SerializedName;
  *
  * @author Evgeniy Egorov
  */
-public class JsonRPC20 extends AJsonRPC20 {
-
-    public JsonRPC20() {
+public class JsonRPC20OK extends AJsonRPC20 {
+    
+    public JsonRPC20OK() {
     }
-
-    public JsonRPC20(String method, CmdParams params) {
-        this.method = method;
-        this.params = params;
-    }
+    
     @Expose
-    @SerializedName("params")
-    private CmdParams params;
+    @SerializedName("result")
+    private int result = 1;
 
-    public void setParams(CmdParams params) {
-        this.params = params;
+    public void setResult(int result) {
+        this.result = result;
     }
 
-    public CmdParams getParams() {
-        return params;
+    public int getResult() {
+        return result;
     }
+
+    /**
+     * 
+     * @param result Результат успешного выполнения отличный от 1 
+     */
+    public JsonRPC20OK(int result) {
+        this.result = result;
+    }
+    
 }

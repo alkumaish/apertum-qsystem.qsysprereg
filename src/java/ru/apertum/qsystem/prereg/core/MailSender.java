@@ -14,6 +14,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import ru.apertum.qsystem.common.Uses;
 import ru.apertum.qsystem.prereg.Client;
 
 /**
@@ -47,19 +48,20 @@ public class MailSender {
             final Message msg = new MimeMessage(mailSession);
             msg.setSubject("[" + System.getProperty("QSYSPREREG_TITLE") + "] Предварительная регистрация " + client.getAdvClient().getId());
             msg.setRecipient(RecipientType.TO, new InternetAddress(client.getEmail(), client.toString()));
-            msg.setText(System.getProperty("QSYSPREREG_CAPTION") + "\n\n\n"
+            final String mess = System.getProperty("QSYSPREREG_CAPTION") + "\n\n\n"
                     + "   Здравствуйте " + client.getSourname() + " " + client.getName() + " " + client.getMiddlename() + "\n\n"
                     + "Вы зарегистрированы предварительно для получения услуги " + client.getService().getName() + "\n"
                     + "Номер регистрации " + client.getAdvClient().getId() + "\n"
                     + "Этот номер необходимо ввести при получении талона на киоске регистрации, не потеряйте его.\n"
-                    + "Вам необходимо прийти " + client.getDay() + " c " + client.getStartT() + " до " + client.getFinishT() + "\n\n\n"
-                    + client.getService().getInput_caption() + "  " + client.getInputData() + "\n\n"
+                    + "Вам необходимо прийти " + Uses.format_dd_MM_yyyy.format(client.getDate()) + /*" c " + client.getStartT() + " до "*/ " к " + client.getFinishT() + "\n\n\n"
+                    + client.getService().getInput_caption() + "  " + (client.getInputData() != null ? client.getInputData() : "") + "\n\n"
                     + client.getService().getPreInfoPrintText() + "\n\n\n"
                     + "Это письмо выслано автоматически. Не отвечайте на него.\n"
-                    + "QSystem - Copyright 2012 Apertum Projects");
+                    + "QSystem - Copyright 2013 Apertum Projects";
+            msg.setText(mess);
             Transport.send(msg);
         } catch (NamingException | MessagingException | UnsupportedEncodingException me) {
-            System.err.println("Server SUO isnt make mail! " + me);
+            System.err.println("Server SUO not sent mail! " + me);
         }
     }
 }
