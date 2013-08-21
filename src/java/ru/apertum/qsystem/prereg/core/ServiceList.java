@@ -8,8 +8,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
 import javax.swing.tree.TreeNode;
+import org.zkoss.zk.ui.Sessions;
 import ru.apertum.qsystem.common.NetCommander;
 import ru.apertum.qsystem.common.model.INetProperty;
+import ru.apertum.qsystem.prereg.SiteProperty;
 import ru.apertum.qsystem.server.model.ATreeModel;
 import ru.apertum.qsystem.server.model.ISailListener;
 import ru.apertum.qsystem.server.model.QService;
@@ -27,15 +29,15 @@ public class ServiceList {
     public static final INetProperty netProperty = new INetProperty() {
         @Override
         public Integer getPort() {
-            return Integer.parseInt(System.getProperty("QSYSTEM_SERVER_PORT"));
+            return ((SiteProperty) Sessions.getCurrent().getAttribute("PROPS")).getServerPort();
         }
 
         @Override
         public InetAddress getAddress() {
             try {
-                return InetAddress.getByName(System.getProperty("QSYSTEM_SERVER_ADDR"));
+                return InetAddress.getByName(((SiteProperty) Sessions.getCurrent().getAttribute("PROPS")).getServerAddr());
             } catch (UnknownHostException ex) {
-                throw new RuntimeException("Wrong address of server: " + System.getProperty("QSYSTEM_SERVER_ADDR"));
+                throw new RuntimeException("Wrong address of server: " + ((SiteProperty) Sessions.getCurrent().getAttribute("PROPS")).getServerAddr());
             }
         }
     };

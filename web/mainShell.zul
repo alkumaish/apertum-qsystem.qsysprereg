@@ -5,16 +5,32 @@
     
     <vbox width="100%" height="100%" style="border:0px solid black;" align="center" pack="center">
         
-        <zscript><![CDATA[
-            String title = java.lang.System.getProperty("QSYSPREREG_TITLE");
-            String caption = java.lang.System.getProperty("QSYSPREREG_CAPTION");
+        <zscript>
+          <![CDATA[
+            ru.apertum.qsystem.prereg.SiteProperty sp = (ru.apertum.qsystem.prereg.SiteProperty) Sessions.getCurrent().getAttribute("PROPS");
+            String com = Executions.getCurrent().getParameter("com");
+            if (sp == null || (sp != null && (com != null))){
+               sp = new ru.apertum.qsystem.prereg.SiteProperty(com,
+                System.getProperty(com + "_" + "QSYSPREREG_TITLE"),
+                System.getProperty(com + "_" + "QSYSPREREG_CAPTION"),
+                System.getProperty(com + "_" + "QSYSPREREG_LOGO"),
+                System.getProperty(com + "_" + "QSYSPREREG_PASSWORD"),
+                System.getProperty(com + "_" + "QSYSTEM_SERVER_ADDR"),
+                Integer.parseInt(System.getProperty(com + "_" + "QSYSTEM_SERVER_PORT")));
+                Sessions.getCurrent().setAttribute("PROPS", sp);
+            }
             
-   ]]>
+            
+          ]]>
         </zscript>
         
-        <window id="main_w" title="${title}" border="normal" width="800px" height="600px" self="@{insert(main_window_data)}">
+        <window id="main_w" title="${sp.getTitle()}" border="normal" width="800px" height="600px" self="@{insert(main_window_data)}">
             <caption label="Предварительная запись" />
-            <label sclass="labelstyle" value= "${caption}"/>
+            <div align="center">
+                <image id="img0" src="${sp.getLogoPath()}" width=""  height="" align="middle"/>
+                <label sclass="labelstyle" value= "${sp.getCaption()}"/>
+            </div>
+            
             
         </window>
         

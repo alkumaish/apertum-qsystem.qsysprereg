@@ -11,13 +11,14 @@ public class ClientFormValidator extends AbstractValidator {
     public void validate(ValidationContext ctx) {
         //all the bean properties
         Map<String, Property> beanProps = ctx.getProperties(ctx.getProperty().getBase());
-
+/*
         validateName(ctx, (String) beanProps.get("name").getValue());
         validateSourname(ctx, (String) beanProps.get("sourname").getValue());
         validateMiddlename(ctx, (String) beanProps.get("middlename").getValue());
         validateEmail(ctx, (String) beanProps.get("email").getValue());
 
         validateCaptcha(ctx, (String) ctx.getValidatorArg("captcha"), (String) ctx.getValidatorArg("captchaInput"));
+        */ 
     }
 
     private void validateEmail(ValidationContext ctx, String email) {

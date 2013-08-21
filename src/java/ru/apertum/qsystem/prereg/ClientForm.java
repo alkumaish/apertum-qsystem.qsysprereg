@@ -1,6 +1,7 @@
 package ru.apertum.qsystem.prereg;
 
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
@@ -8,6 +9,22 @@ import ru.apertum.qsystem.prereg.core.ServiceList;
 
 public class ClientForm {
 
+    private String com;
+
+    @Init
+    public void init() {
+        this.com = Executions.getCurrent().getParameter("com");
+        if (com == null) {
+            com = "";
+        }
+        Sessions.getCurrent().setAttribute("PROPS", new SiteProperty(com,
+                System.getProperty(com + "_" + "QSYSPREREG_TITLE"),
+                System.getProperty(com + "_" + "QSYSPREREG_CAPTION"),
+                System.getProperty(com + "_" + "QSYSPREREG_LOGO"),
+                System.getProperty(com + "_" + "QSYSPREREG_PASSWORD"),
+                System.getProperty(com + "_" + "QSYSTEM_SERVER_ADDR"),
+                Integer.parseInt(System.getProperty(com + "_" + "QSYSTEM_SERVER_PORT"))));
+    }
     private RandomStringGenerator rsg = new RandomStringGenerator(5);
     private Client client = new Client();
     private String captcha = rsg.getRandomString(), captchaInput;

@@ -14,8 +14,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import org.zkoss.zk.ui.Sessions;
 import ru.apertum.qsystem.common.Uses;
 import ru.apertum.qsystem.prereg.Client;
+import ru.apertum.qsystem.prereg.SiteProperty;
 
 /**
  *
@@ -46,9 +48,9 @@ public class MailSender {
         try {
             final Session mailSession = (Session) ctx.lookup("QSYSPREREG-MAIL");
             final Message msg = new MimeMessage(mailSession);
-            msg.setSubject("[" + System.getProperty("QSYSPREREG_TITLE") + "] Предварительная регистрация " + client.getAdvClient().getId());
+            msg.setSubject("[" + ((SiteProperty) Sessions.getCurrent().getAttribute("PROPS")).getTitle() + "] Предварительная регистрация " + client.getAdvClient().getId());
             msg.setRecipient(RecipientType.TO, new InternetAddress(client.getEmail(), client.toString()));
-            final String mess = System.getProperty("QSYSPREREG_CAPTION") + "\n\n\n"
+            final String mess = ((SiteProperty) Sessions.getCurrent().getAttribute("PROPS")).getCaption() + "\n\n\n"
                     + "   Здравствуйте " + client.getSourname() + " " + client.getName() + " " + client.getMiddlename() + "\n\n"
                     + "Вы зарегистрированы предварительно для получения услуги " + client.getService().getName() + "\n"
                     + "Номер регистрации " + client.getAdvClient().getId() + "\n"
