@@ -51,12 +51,12 @@ public class MailSender {
             msg.setSubject("[" + ((SiteProperty) Sessions.getCurrent().getAttribute("PROPS")).getTitle() + "] Предварительная регистрация " + client.getAdvClient().getId());
             msg.setRecipient(RecipientType.TO, new InternetAddress(client.getEmail(), client.toString()));
             final String mess = ((SiteProperty) Sessions.getCurrent().getAttribute("PROPS")).getCaption() + "\n\n\n"
-                    + "   Здравствуйте " + client.getSourname() + " " + client.getName() + " " + client.getMiddlename() + "\n\n"
-                    + "Вы зарегистрированы предварительно для получения услуги " + client.getService().getName() + "\n"
-                    + "Номер регистрации " + client.getAdvClient().getId() + "\n"
+                    + "   Здравствуйте " + client.getSourname() + " " + client.getName() + " " + client.getMiddlename() + ".\n\n"
+                    + "Вы зарегистрированы предварительно для получения услуги \"" + client.getService().getName() + "\".\n"
+                    + "Номер регистрации " + client.getAdvClient().getId() + ".\n"
                     + "Этот номер необходимо ввести при получении талона на киоске регистрации, не потеряйте его.\n"
-                    + "Вам необходимо прийти " + Uses.format_dd_MM_yyyy.format(client.getDate()) + /*" c " + client.getStartT() + " до "*/ " к " + client.getFinishT() + "\n\n\n"
-                    + client.getService().getInput_caption() + "  " + (client.getInputData() != null ? client.getInputData() : "") + "\n\n"
+                    + "Вам необходимо прийти " + Uses.format_dd_MM_yyyy.format(client.getDate()) + /*" c " + client.getStartT() + " до "*/ " к " + client.getFinishT() + ".\n\n\n"
+                    + client.getService().getInput_caption() + "  " + (client.getInputData() != null ? client.getInputData() : "") + ".\n\n"
                     + client.getService().getPreInfoPrintText() + "\n\n\n"
                     + "Это письмо выслано автоматически. Не отвечайте на него.\n"
                     + "QSystem - Copyright 2013 Apertum Projects";

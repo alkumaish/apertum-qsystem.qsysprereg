@@ -55,7 +55,7 @@ public class ServiceList {
         QServiceTree.sailToStorm(service, new ISailListener() {
             @Override
             public void actionPerformed(TreeNode service) {
-                if (service.isLeaf() && ((QService) service).getStatus().intValue() == 1) {
+                if (service.isLeaf() && ((QService) service).getAdvanceLimit() != 0 && ((QService) service).getStatus().intValue() == 1) {
                     list.add((QService) service);
                 }
             }

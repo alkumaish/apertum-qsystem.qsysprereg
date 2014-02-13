@@ -7,17 +7,19 @@
     <vbox width="100%" height="100%" style="border:0px solid black;" align="center" pack="center" self="@{define(main_window_data)}">
         
         
-        <div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('ru.apertum.qsystem.prereg.TimeForm')">
+        <div height="500px" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('ru.apertum.qsystem.prereg.TimeForm')">
             <vbox width="700px">
                 <hbox>
                     <label sclass="labelstyle" value= "@bind(vm.client.name)"/>
                     <label sclass="labelstyle" value= "@bind(vm.client.middlename)"/>
                     <label sclass="labelstyle" value= "@bind(vm.client.sourname)"/>
+                    <label sclass="labelstyle" value= "   "/>
+                    <label sclass="labelstyle" value= "@bind(vm.client.email)"/>
                 </hbox>
-                <label sclass="labelstyle" value= "@bind(vm.client.email)"/>
+                
                 <hbox>
                     <label sclass="labelstyle" value= "Выбранная услуга: "/>
-                    <label sclass="labelstyle" value= "@bind(vm.client.service)"/>
+                    <label sclass="labelstyle" value= "@bind(vm.client.service.name.length() > 42 ? vm.client.service.name.substring(0,42).concat('...')  : vm.client.service.name )"/>
                 </hbox>
                 <hbox>
                     <label sclass="labelstyle" value= "@bind(vm.client.service.input_caption)"/>
@@ -26,9 +28,10 @@
                 <label sclass="labelstyle" value= " "/>
                 <label id="lbl"  sclass="labelstyle" value="Выберите дату и время для обращения."/>
             </vbox>
-            <hbox align="left" pack="left">
+            <hbox height="340px">
                 <calendar id="cal" value="@bind(vm.date)" onChange="@command('changeDate')" />
                 <listbox width="300px" id="listbox" mold="paging" pageSize="10" model="@load(vm.timeList)" 
+                         vflex="1"
                          multiple="false" checkmark="true"  
                          selectedItem="@bind(vm.selectedDate)" onCreate="">
                     <attribute name="onCreate"><![CDATA[listbox.pagingChild.mold = "os".equals(listbox.pagingChild.mold) ? "default" : "os";]]>

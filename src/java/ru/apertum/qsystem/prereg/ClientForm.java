@@ -18,14 +18,15 @@ public class ClientForm {
             com = "";
         }
         Sessions.getCurrent().setAttribute("PROPS", new SiteProperty(com,
-                System.getProperty(com + "_" + "QSYSPREREG_TITLE"),
-                System.getProperty(com + "_" + "QSYSPREREG_CAPTION"),
-                System.getProperty(com + "_" + "QSYSPREREG_LOGO"),
-                System.getProperty(com + "_" + "QSYSPREREG_PASSWORD"),
-                System.getProperty(com + "_" + "QSYSTEM_SERVER_ADDR"),
-                Integer.parseInt(System.getProperty(com + "_" + "QSYSTEM_SERVER_PORT"))));
+                System.getProperty(com + "_" + "QSYSPREREG_TITLE", "Это заголовок QSYSPREREG_TITLE"),
+                System.getProperty(com + "_" + "QSYSPREREG_CAPTION", "Это тоже заголовок QSYSPREREG_CAPTION"),
+                System.getProperty(com + "_" + "QSYSPREREG_LOGO", ""),
+                System.getProperty(com + "_" + "QSYSPREREG_PASSWORD", ""),
+                System.getProperty(com + "_" + "QSYSTEM_SERVER_ADDR", "127.0.0.1"),
+                System.getProperty(com + "_" + "QSYSTEM_SERVER_PORT", "3128").matches("-?\\d+(\\.\\d+)?")
+                ? Integer.parseInt(System.getProperty(com + "_" + "QSYSTEM_SERVER_PORT", "3128")) : 3128));
     }
-    private RandomStringGenerator rsg = new RandomStringGenerator(5);
+    private final RandomStringGenerator rsg = new RandomStringGenerator(5);
     private Client client = new Client();
     private String captcha = rsg.getRandomString(), captchaInput;
 
