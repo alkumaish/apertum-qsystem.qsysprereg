@@ -13,6 +13,7 @@ public class ClientForm {
 
     @Init
     public void init() {
+        /*
         this.com = Executions.getCurrent().getParameter("com");
         if (com == null) {
             com = "";
@@ -25,6 +26,7 @@ public class ClientForm {
                 System.getProperty(com + "_" + "QSYSTEM_SERVER_ADDR", "127.0.0.1"),
                 System.getProperty(com + "_" + "QSYSTEM_SERVER_PORT", "3128").matches("-?\\d+(\\.\\d+)?")
                 ? Integer.parseInt(System.getProperty(com + "_" + "QSYSTEM_SERVER_PORT", "3128")) : 3128));
+                */
     }
     private final RandomStringGenerator rsg = new RandomStringGenerator(5);
     private Client client = new Client();

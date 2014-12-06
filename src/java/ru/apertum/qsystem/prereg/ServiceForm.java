@@ -30,7 +30,7 @@ public class ServiceForm {
     }
 
     public void setSelectedService(QService selectedService) {
-        selectedService.setInput_caption(selectedService.getInput_caption().replaceAll("<.*?>",""));
+        selectedService.setInput_caption(selectedService.getInput_caption().replaceAll("<.*?>", ""));
         this.selectedService = selectedService;
     }
 
